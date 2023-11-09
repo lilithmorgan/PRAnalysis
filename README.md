@@ -3,7 +3,7 @@
 Este projeto é uma aplicação que interage com o Azure DevOps e a API da OpenAI para analisar pull requests e fornecer feedbacks automáticos com base nas mudanças propostas no código. A aplicação é dividida em dois componentes principais: um webhook para processar os eventos de pull request do Azure DevOps e uma API para comunicar-se com a API da OpenAI.
 
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bob-reis_pr_analisys&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bob-reis_pr_analisys)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lilithmorgan_PRAnalysis&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=lilithmorgan_PRAnalysis)
 
 
 ## Estrutura do Projeto
