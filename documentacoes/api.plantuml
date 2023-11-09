@@ -1,0 +1,35 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE App {
+    Flask(__name__)
+}
+
+RECTANGLE Configuração {
+    openai.api_key
+}
+
+RECTANGLE Endpoint_Index {
+    index()
+}
+
+RECTANGLE Endpoint_Message {
+    respond_message()
+}
+
+RECTANGLE OpenAI_API_Call {
+    openai.ChatCompletion.create()
+}
+
+RECTANGLE Error_Handling {
+    Exception Handling
+}
+
+App --> Configuração : Inicializa
+Configuração --> Endpoint_Index : Prepara para receber requisições
+Configuração --> Endpoint_Message : Prepara para receber requisições
+Endpoint_Message --> OpenAI_API_Call : Chama a API da OpenAI
+OpenAI_API_Call --> Endpoint_Message : Retorna a resposta
+Endpoint_Message --> Error_Handling : Em caso de erro
+Error_Handling --> Endpoint_Message : Retorna o erro
+@enduml

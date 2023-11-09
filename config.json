@@ -1,0 +1,4 @@
+{
+    "organization_name": "Blockbit",
+    "api_endpoint": "http://api:5000/message"
+}

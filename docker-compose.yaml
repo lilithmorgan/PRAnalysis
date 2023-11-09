@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./API.Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+
+  pr:
+    build:
+      context: .
+      dockerfile: ./PR.Dockerfile
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env

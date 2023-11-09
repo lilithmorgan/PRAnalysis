@@ -1,0 +1,35 @@
+@startuml
+!define RECTANGLE class
+
+RECTANGLE App {
+    Flask(__name__)
+}
+
+RECTANGLE Configuração {
+    Carrega configurações
+    Inicializa variáveis
+}
+
+RECTANGLE Clonagem_de_Repositório {
+    clone_repository()
+    update_repository()
+}
+
+RECTANGLE Webhook_Endpoint {
+    /webhook
+}
+
+RECTANGLE Análise_e_Comentário {
+    analyze_code_and_comment()
+    save_diff_to_file()
+    get_diff()
+    clean_repository()
+    validate_pr_data()
+}
+
+App --> Configuração : Inicializa
+Configuração --> Clonagem_de_Repositório : Prepara para clonagem
+Clonagem_de_Repositório --> Webhook_Endpoint : Prepara para receber webhook
+Webhook_Endpoint --> Análise_e_Comentário : Processa dados do webhook
+Análise_e_Comentário --> Webhook_Endpoint : Retorna resposta
+@enduml

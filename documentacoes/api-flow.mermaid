@@ -1,0 +1,42 @@
+graph TD;
+
+    subgraph Inicialização da Aplicação
+        start1(Start) --> A[Configura Flask App]
+        A --> B[Configura OpenAI API Key]
+    end
+
+    subgraph Endpoint Index
+        B --> C[Endpoint /]
+        C --> D[Retorna &quot;API is running&quot;]
+    end
+    
+    subgraph Endpoint de Mensagem
+        B --> E[Endpoint /message]
+        E --> F[Recebe Requisição POST]
+        F --> G[Log da Requisição Recebida]
+        G --> H1{Mensagens Válidas?}
+        H1 -->|Não| X1[Retorna Erro 400]
+        H1 -->|Sim| I[Chama OpenAI API]
+    end
+
+    subgraph Resposta da OpenAI
+        I --> J[Log da Resposta da OpenAI]
+        J --> K1{Resposta Válida?}
+        K1 -->|Não| X2[Retorna Erro 500]
+        K1 -->|Sim| L[Extrai Conteúdo da Resposta]
+        L --> M[Retorna Resposta]
+    end
+    
+    subgraph Erro Durante a Chamada da API
+        I --> N[Catch Exception]
+        N --> O[Log do Erro]
+        O --> X3[Retorna Erro 500]
+    end
+
+    subgraph Execução do Servidor
+        M --> P[Executa App]
+        D --> P
+        X1 --> P
+        X2 --> P
+        X3 --> P
+    end

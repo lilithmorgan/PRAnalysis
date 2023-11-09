@@ -1,0 +1,31 @@
+graph TD;
+
+    subgraph Flask App
+        start1(Start) --> A[Carrega Configurações]
+        A --> B[Inicializa Variáveis]
+    end
+
+    subgraph Clonagem de Repositório
+        B --> C1{Repositório Existe?}
+        C1 -->|Sim| D1[Atualiza Repositório]
+        C1 -->|Não| E1[Clona Repositório]
+        E1 --> D1
+    end
+
+    subgraph Webhook Endpoint
+        D1 --> F1[Recebe Payload de PR via POST]
+        F1 --> G1[Valida Dados de PR]
+        G1 -->|Erro| Z1[Retorna Erro]
+        G1 --> H1[Obtém Diff]
+    end
+
+    subgraph Análise e Comentário
+        H1 --> I1[Salva Diff em Arquivo]
+        I1 --> J1[Envia Diff para Análise]
+        J1 --> K1[Posta Comentário na PR]
+        K1 --> L1[Limpa Repositório]
+        L1 --> M1[Retorna Sucesso]
+    end
+    
+    Z1 --> end1[Término com Erro]
+    M1 --> end2[Término com Sucesso]

@@ -1,0 +1,48 @@
+---
+- name: Instala os pacotes minimos necessario
+  become: true
+  apt:
+    pkg:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: latest
+    update_cache: true
+
+- name: Adiciona o GPG Key do Docker
+  become: true
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Adiciona o repositorio do Docker
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Atualiza e Instala o Docker
+  become: true
+  apt:
+    pkg:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose
+    state: latest
+    update_cache: true
+
+- name: Install docker-compose
+  become: true
+  get_url: 
+    url : https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+
+- name: "Iniciando o Serviço do Docker"
+  become: yes
+  service:
+    name: "docker"
+    state: started
+    enabled: yes

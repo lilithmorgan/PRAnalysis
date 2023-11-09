@@ -1,0 +1,5 @@
+---
+- name: Altera o timezone da instância para America/Sao_Paulo
+  become: true
+  community.general.timezone:
+    name: "America/Sao_Paulo"

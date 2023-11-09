@@ -1,0 +1,6 @@
+Flask==2.0.1
+openai==0.27.0
+requests==2.26.0
+MarkupSafe==2.0.0rc2
+Werkzeug==2.0
+Jinja2==3.0

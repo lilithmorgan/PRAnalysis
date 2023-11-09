@@ -1,0 +1,42 @@
+---
+- name: Clonar ou Atualizar repositório
+  become: yes
+  git:
+    repo: "https://{{ PAT_AZURE }}@dev.azure.com/Blockbit/DevOps/_git/pr-analyzer"
+    dest: "/opt/pr-analysis"
+    update: yes
+    force: yes
+
+- name: Substituir chave OPENAI no arquivo .env
+  become: yes
+  replace:
+    path: "/opt/pr-analysis/.env"
+    regexp: 'OPENAI_API_KEY=<openai-key>'
+    replace: 'OPENAI_API_KEY={{ OPENAI_KEY }}'
+
+- name: Substituir chave PAT_AZURE no arquivo .env
+  become: yes
+  replace:
+    path: "/opt/pr-analysis/.env"
+    regexp: 'PAT_AZURE=<pat-azure-key>'
+    replace: 'PAT_AZURE={{ PAT_AZURE }}'
+
+- name: Limpar Itens anteriores"
+  become: yes
+  community.docker.docker_compose:
+    project_src: /opt/pr-analysis
+    state: absent
+
+- name: Construir imagens
+  become: yes
+  community.docker.docker_compose:
+    project_src: /opt/pr-analysis
+    state: present
+    build: yes
+
+- name: Iniciar serviços
+  become: yes
+  community.docker.docker_compose:
+    project_src: /opt/pr-analysis
+    state: present
+    remove_orphans: yes

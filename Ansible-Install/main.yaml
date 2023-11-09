@@ -1,0 +1,16 @@
+---
+- hosts: server
+  tasks:
+    - name: Definir Variáveis
+      set_fact:
+        PAT_AZURE: "{{ lookup('env','PAT_AZURE') }}"
+        OPENAI_KEY: "{{ lookup('env','OPENAI_KEY') }}"
+        
+    - name: Altera o timezone da instância para America/Sao_Paulo
+      import_tasks: set_timezone.yaml
+
+    - name: Configuração e instalação do Docker
+      import_tasks: install_docker.yaml
+
+    - name: Deploy
+      import_tasks: deploy_pranalyzer.yaml
